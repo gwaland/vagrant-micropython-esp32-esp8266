@@ -14,11 +14,11 @@ config.vm.provision "build",
   # Install needed applications
   sudo apt-get -y install make unrar-free autoconf automake libtool gcc g++ gperf \
     flex bison texinfo gawk ncurses-dev libexpat-dev python-dev python python-serial \
-    sed git unzip bash help2man wget bzip2 libtool-bin python3-pip cmake
+    sed git unzip bash help2man wget bzip2 libtool-bin python-pip cmake
   
   # setup alternatives for pyhon and install needed apps. 
-  sudo update-alternatives --install /usr/bin/python python /usr/bin/python3 1
-  sudo pip3 install pyserial 'pyparsing<2.4'
+  sudo update-alternatives --install /usr/bin/python python /usr/bin/python2 1
+  sudo pip install pyserial 'pyparsing<2.4'
   
   #get and install the esp sdk for esp8266
   git clone --recursive https://github.com/pfalcon/esp-open-sdk.git
