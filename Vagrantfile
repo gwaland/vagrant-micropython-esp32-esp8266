@@ -18,7 +18,7 @@ config.vm.provision "build",
   
   # setup alternatives for pyhon and install needed apps. 
   sudo update-alternatives --install /usr/bin/python python /usr/bin/python2 1
-  sudo pip install pyserial 'pyparsing<2.4'
+  sudo python -m pip install pyserial 'pyparsing<2.4'
   
   #get and install the esp sdk for esp8266
   git clone --recursive https://github.com/pfalcon/esp-open-sdk.git
@@ -26,7 +26,7 @@ config.vm.provision "build",
   make STANDALONE=y
   echo "export PATH=/home/vagrant/esp-open-sdk/xtensa-lx106-elf/bin:$PATH" >> ~/.bashrc
   export PATH=/home/vagrant/esp-open-sdk/xtensa-lx106-elf/bin:$PATH
-
+  
   # Install the esp-idf
   cd ~
   git clone https://github.com/espressif/esp-idf.git
@@ -48,6 +48,8 @@ config.vm.provision "build",
   git submodule update --init
   make -C mpy-cross
 
+  
+  
 SHELL
 config.vm.provision "update",
   run: 'always',
@@ -68,16 +70,16 @@ config.vm.provision "update",
   #compile esp8266
   cd ports/esp8266
   sudo chown -r vagrant /vagrant/modules
-  cp /vagrant/modules/* ./modules
-  make clean all
+  cp -r /vagrant/modules/* ./modules
+  make clean 
   make
   cp build-GENERIC/firmware-combined.bin /vagrant/micropython-esp8266.bin
   
   #compile esp32. 
   cd ~/micropython/ports/esp32
-  cp /vagrant/modules/* ./modules
-  make clean all
-  make
+  cp -r /vagrant/modules/* ./modules
+  make clean 
+  make PYTHON=python2
   cp build-GENERIC/firmware.bin /vagrant/micropython-esp32.bin
   
 
